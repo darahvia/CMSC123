@@ -35,13 +35,13 @@ class ArrayStack(Array):
 	def top(self):
 		if not self.contents:
 			return None
-		return self.contents[-1]
+		return self.contents[-1]			#access the last element
 
 
 	def push(self, value):
 		if (self.size < self.capacity):
-			newElement = Element(value, self.size)
-			self.contents += [newElement]
+			newElement = Element(value, self.size)	
+			self.contents += [newElement]		# add the element to the last of the array
 			self.size += 1
 			return
 		else:
@@ -49,7 +49,7 @@ class ArrayStack(Array):
 
 		
 	def pop(self):
-		poppedElement = self.contents[-1]
-		self.contents = self.contents[:-1]
+		poppedElement = self.contents[-1]		# store the last element
+		self.contents = self.contents[:-1]		# copy the elements into the same array but without the last element
 		self.size -= 1
-		return poppedElement
+		return poppedElement	

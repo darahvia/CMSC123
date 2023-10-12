@@ -28,7 +28,7 @@ class SLLStack(SLL):
 
 	def top(self):
 		if self.size == 0:
-			return SLLNode(None)
+			return SLLNode(None)		
 		else:
 			return self.topNode
 
@@ -36,9 +36,9 @@ class SLLStack(SLL):
 	def push(self, value):
 		newNode = SLLNode(value)
 		if self.isEmpty():
-			self.topNode = newNode
+			self.topNode = newNode			#make the newNode the topNode
 		else:
-			newNode.setNext(self.topNode)
+			newNode.setNext(self.topNode)	#make the newNode be the nextNode of the previous node
 			self.topNode = newNode
 		self.size += 1
 		
@@ -46,9 +46,9 @@ class SLLStack(SLL):
 
 	def pop(self):
 		if self.isEmpty():
-			raise ValueError
+			raise Exception 						#EmptyStackException
 		else:
-			poppedNode = self.topNode
-			self.topNode = self.topNode.getNext()
+			poppedNode = self.topNode				#store the otpnode
+			self.topNode = self.topNode.getNext()	#make the topnode the next node
 			self.size -= 1
 			return poppedNode
