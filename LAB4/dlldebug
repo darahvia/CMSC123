@@ -1,0 +1,232 @@
+class DLLNode:
+	# Insert the 'DLLNode' class you created in Lab1, since they should be the same
+	def __init__(self, value):
+		self.value = value
+		self.nextNode = None
+		self.prevNode = None
+
+	def setValue(self,value):
+		self.value = value
+
+	def getValue(self):
+		return self.value
+
+	def setNext(self,nextNode):
+		self.nextNode = nextNode
+
+	def getNext(self):
+		return self.nextNode
+
+	def setPrev(self,prevNode):
+		self.prevNode = prevNode
+
+	def getPrev(self):
+		return self.prevNode
+
+class DLL:
+	# Insert the 'DLL' class you created in Lab1, since they should be the same
+	def __init__(self):
+		self.size = 0
+		self.headNode = DLLNode(None)
+		self.tailNode = self.headNode
+		self.tailNode.setNext(None)
+		self.headNode.setPrev(None)
+
+	def getSize(self):
+		return self.size
+
+	def isEmpty(self):
+		return (self.getSize() == 0)
+
+class DLLDeque(DLL):
+	# Note that class "DLLQueue" inherits the class "DLL" attributes and methods
+
+	def first(self):
+		return self.headNode
+		# The first() operation returns a reference value to the first element of the deque, but doesn’t remove it
+		# REQUIRED
+
+	def last(self):
+		return self.tailNode
+		# The last() operation returns a reference value to the last element of the deque, but doesn’t remove it
+		# REQUIRED
+
+	def insertFirst(self, value):
+		newNode = DLLNode(value)
+		newNode.setNext(self.headNode)
+		newNode.setPrev(None)
+		self.headNode.setPrev(newNode)
+		self.headNode = newNode
+		self.size += 1
+
+		# The insertFirst() operation inserts an element at the front of the deque
+		# REQUIRED
+
+	def insertLast(self, value):
+		newNode = DLLNode(value)
+		newNode.setPrev(self.tailNode)
+		newNode.setNext(None)
+		self.tailNode.setNext(newNode)
+		self.tailNode = newNode
+		self.size += 1
+		# The insertLast() operation inserts an element at the end of the deque
+		# REQUIRED
+
+	def removeFirst(self):
+		if self.isEmpty():
+			raise ValueError
+		else:
+			firstNode = self.headNode
+			self.headNode = firstNode.getNext()
+			firstNode.setNext(None)
+			self.size -= 1
+			return firstNode
+		
+		# The removeFirst() operation removes the element at the front of the deque
+		# This should also return the 'DLLNode' that was removed
+		# REQUIRED
+
+	def removeLast(self):
+		if self.isEmpty():
+			raise ValueError
+		else:
+			lastNode = self.tailNode
+			self.tailNode = lastNode.getPrev()
+			if self.tailNode is not None:
+				self.tailNode.setNext(None)
+			lastNode.setPrev(None)
+			self.size -= 1
+			return lastNode
+	def display(self):
+		current = self.headNode
+		while current is not None:
+			if current.getValue() is not None:
+				print(current.getValue(), end = " ")
+			current = current.getNext()
+		print()
+		# The removeLast() operation removes the element at the end of the deque
+		# This should also return the 'DLLNode' that was removed
+		# REQUIRED
+
+# DLL Deque Tester
+import random
+def DLLDequeTest():
+
+	score = 0
+	TOTAL = 50
+	testDLL = DLLDeque()
+	
+	try:
+		if testDLL.isEmpty():
+			score+=1
+	except:
+		print("Error: Problem initializing DLL Deque")
+		return
+
+	randNums1 = []
+	try:
+		for i in range(5):
+			randNums1.append(random.random())
+			testDLL.insertFirst(randNums1[i])
+		
+		if testDLL.getSize() == 5:
+			score+=2
+
+		i = 0
+		current = testDLL.last()
+		while current:
+			print("current = ", current.getValue())
+			print("rand = ", randNums1[i])
+			if current.getValue() == randNums1[i]:
+
+				score+=1
+				i+=1
+			current = current.getPrev()
+	except:
+		print("Error: insertFirst() not working properly")
+		return
+
+	randNums1 = []
+	try:
+		for i in range(5):
+			randNums1.append(random.random())
+			testDLL.insertLast(randNums1[i])
+		
+		if testDLL.getSize() == 10:
+			score+=2
+
+		i = 0
+		current = testDLL.first()
+		while current:
+			
+			if current.getValue() == randNums1[i]:
+				print(i)
+				score+=1
+				i+=1
+			current = current.getNext()
+	except:
+		print("Error: insertLast() not working properly")
+		return
+	
+	try:
+		for i in range(5):
+			prevSize = testDLL.getSize()
+			removed = testDLL.removeFirst()
+			front = testDLL.first()
+			if testDLL.getSize() == (prevSize - 1):
+				score+=0.5
+			if front.getValue() != removed.getValue():
+				score+=1.5
+			if removed.getNext() == None:
+				score+=0.5
+	except:
+		print("Error: removeFirst() not working properly")
+		return
+
+	try:
+		for i in range(5):
+			prevSize = testDLL.getSize()
+			removed = testDLL.removeLast()
+			last = testDLL.last()
+			if testDLL.getSize() == (prevSize - 1):
+				score+=0.5
+			if last.getValue() != removed.getValue():
+				score+=1.5
+			if removed.getPrev() == None:
+				score+=0.5
+	except:
+		print("Error: removeLast() not working properly")
+		return
+	
+	# Empty SLL Test
+	try:
+		if testDLL.isEmpty():
+			score+=2
+		if (testDLL.first().getValue() == None):
+			score+=2
+		if (testDLL.last().getValue() == None):
+			score+=2
+
+	except:
+		print("Error: removeFirst() or removeLast() not working properly [does not empty SLL]")
+		return
+
+	try:
+		testDLL.removeFirst()
+		print("Error: removeFirst() still working even if SLL is empty")
+		return
+	except:
+		score+=2
+	try:
+		testDLL.removeLast()
+		print("Error: removeLast() still working even if SLL is empty")
+		return
+	except:
+		score+=2
+
+	print ("Your TOTAL SCORE is " + str(score) + "/" + str(TOTAL) + ".")
+	print ("Percentage: %.2f" % ((score/TOTAL)*100) + "%")
+	if score == TOTAL:
+		print ("PERFECT SCORE!!!")
+
+DLLDequeTest()
