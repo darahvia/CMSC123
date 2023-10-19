@@ -49,18 +49,18 @@ class DLLDeque(DLL):
 
 	def insertFirst(self, value):
 		newNode = DLLNode(value)
-		newNode.setNext(self.headNode)
-		newNode.setPrev(None)
-		self.headNode.setPrev(newNode)
-		self.headNode = newNode
+		newNode.setNext(self.headNode)			#link the new node to the head node
+		newNode.setPrev(None)					
+		self.headNode.setPrev(newNode)			#link the head node to the new node
+		self.headNode = newNode					#update new head node
 		self.size += 1
 
 	def insertLast(self, value):
 		newNode = DLLNode(value)
-		newNode.setPrev(self.tailNode)
+		newNode.setPrev(self.tailNode)			#link the new node to the tail node
 		newNode.setNext(None)
-		self.tailNode.setNext(newNode)
-		self.tailNode = newNode
+		self.tailNode.setNext(newNode)			#link the tail node to the new node
+		self.tailNode = newNode					#update the tail node
 		self.size += 1
 
 	def removeFirst(self):
@@ -68,8 +68,8 @@ class DLLDeque(DLL):
 			raise ValueError
 		else:
 			firstNode = self.headNode
-			self.headNode = firstNode.getNext()
-			firstNode.setNext(None)
+			self.headNode = firstNode.getNext()	#update new head node
+			firstNode.setNext(None)				#link the removed node to none
 			self.size -= 1
 			return firstNode
 
@@ -78,7 +78,7 @@ class DLLDeque(DLL):
 			raise ValueError
 		else:
 			lastNode = self.tailNode
-			self.tailNode = lastNode.getPrev()
-			lastNode.setPrev(None)
+			self.tailNode = lastNode.getPrev()	#update the new tail node
+			lastNode.setPrev(None)				#link the removed node to none
 			self.size -= 1
 			return lastNode
