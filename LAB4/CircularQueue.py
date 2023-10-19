@@ -99,6 +99,7 @@ class CircularQueue(Array):
 			raise Exception
 		else:
 			dequeuedElement = self.contents[self.frontIndex]				#store the first element to dequeuedElement
+			self.contents[self.frontIndex] = None
 			self.frontIndex = (self.frontIndex + 1) % self.capacity
 			self.size -= 1
 			return dequeuedElement
