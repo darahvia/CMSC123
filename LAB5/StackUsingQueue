@@ -1,0 +1,56 @@
+import ArrayQueue
+class StackUsingQueue:
+    def __init__(self):
+        self.mainQueue = ArrayQueue.ArrayQueue()
+        self.tempQueue = ArrayQueue.ArrayQueue()
+
+    def push(self, value):
+        self.mainQueue.enqueue(value)                                       # To push an element onto the stack, enqueue it into the mainQueue
+
+    def pop(self):
+        if self.mainQueue.isEmpty():
+            raise Exception("Empty Stack")
+        
+        while self.mainQueue.getSize() > 1:
+            self.tempQueue.enqueue(self.mainQueue.dequeue().getValue())     # Move all elements from mainQueue to tempQueue, except the last one
+
+        poppedElement = self.mainQueue.dequeue().getValue()                 # The last element in mainQueue is the one to pop
+        self.mainQueue, self.tempQueue = self.tempQueue, self.mainQueue     # Swap the mainQueue and tempQueue references
+
+        return poppedElement
+
+    def top(self):
+        if self.mainQueue.isEmpty():
+            raise Exception("Empty Stack")
+
+        while self.mainQueue.getSize() > 1:
+            self.tempQueue.enqueue(self.mainQueue.dequeue().getValue())     # Move all elements from mainQueue to tempQueue, except the last one
+
+        topElement = self.mainQueue.front().getValue()                      # The last element in mainQueue is the top element
+        self.mainQueue, self.tempQueue = self.tempQueue, self.mainQueue     # Swap the mainQueue and tempQueue references
+
+        return topElement
+
+    def display(self):
+        displayList = []
+        
+        while not self.mainQueue.isEmpty():                                 # Move all elements from mainQueue to tempQueue and build the displayList
+            value = self.mainQueue.dequeue().getValue()
+            displayList.append(str(value))
+            self.tempQueue.enqueue(value)
+
+        for value in displayList:
+            self.mainQueue.enqueue(value)
+
+        self.mainQueue, self.tempQueue = self.tempQueue, self.mainQueue     # Swap the mainQueue and tempQueue references
+
+        print("Stack:", " ".join(displayList))
+
+# Example usage:
+stack = StackUsingQueue()
+stack.push(1)
+stack.push(2)
+stack.push(3)
+stack.display()
+stack.pop()
+stack.display()
