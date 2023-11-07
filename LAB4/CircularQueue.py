@@ -75,4 +75,3 @@ class CircularQueue(Array):
 			self.frontIndex = (self.frontIndex + 1) % self.capacity 	#move the front index
 			self.size -= 1									
 			return dequeuedElement		
-	
