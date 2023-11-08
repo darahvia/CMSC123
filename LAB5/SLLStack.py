@@ -20,6 +20,9 @@ class SLL:
 		self.size = 0
 		self.topNode = SLLNode(None)
 		self.topNode.setNext(SLLNode(None))
+		
+	def getSize(self):
+		return self.size
 
 	def isEmpty(self):
 		return (self.size == 0)

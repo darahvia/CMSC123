@@ -1,54 +1,52 @@
-import ArrayStack
+import SLLStack
 class QueueUsingStack:
     def __init__(self):
-        self.stack1 = ArrayStack.ArrayStack()  # For enqueueing
-        self.stack2 = ArrayStack.ArrayStack() # For dequeuing
+        self.mainStack = SLLStack.SLLStack() 
+        self.tempStack = SLLStack.SLLStack() 
 
     def enqueue(self, value):
-        # Push the element onto stack1
-        self.stack1.push(value)
+        self.mainStack.push(value)                                          # Push the element onto mainStack
 
     def dequeue(self):
-        if self.stack2.isEmpty():
-            # If stack2 is empty, pop elements from stack1 and push onto stack2
-            while not self.stack1.isEmpty():
-                value = self.stack1.pop().getValue()
-                self.stack2.push(value)
 
-        if self.stack2.isEmpty():
-            raise Exception("Queue is empty")
-
-        # Pop the element from stack2
-        return self.stack2.pop().getValue()
+        if self.mainStack.isEmpty():
+            raise Exception("Queue is Empty")
+        else:
+            while not self.mainStack.isEmpty():                             
+                self.tempStack.push(self.mainStack.pop().getValue())        #pop elements from mainStack to tempStack to reverse
+    
+        dequeuedNode = self.tempStack.pop().getValue()
+        while not self.tempStack.isEmpty():                                 #push back to main queue but without the dequeued node
+            self.mainStack.push(self.tempStack.pop().getValue())
+        return dequeuedNode
 
     def front(self):
-        if self.stack2.isEmpty():
-            if self.stack1.isEmpty():
-                raise Exception("Queue is empty")
-            else:
-                # If stack2 is empty, pop elements from stack1 and push onto stack2
-                while not self.stack1.isEmpty():
-                    value = self.stack1.pop().getValue()
-                    self.stack2.push(value)
-
-        return self.stack2.top().getValue()
+        if self.mainStack.isEmpty():
+            raise Exception("Queue is Empty")
+        else:
+            while not self.mainStack.isEmpty():                             #same implementation with dequeue but does not remove
+                self.tempStack.push(self.mainStack.pop().getValue())
+        
+        frontNode = self.tempStack.top().getValue()
+        while not self.tempStack.isEmpty():
+            self.mainStack.push(self.tempStack.pop().getValue())
+        return frontNode
     
     def display(self):
-        display_list = []
+        displayList = []
 
-        # First, pop elements from stack1 and push onto stack2
-        while not self.stack1.isEmpty():
-            value = self.stack1.pop().getValue()
-            self.stack2.push(value)
+        while not self.mainStack.isEmpty():                                 # Move all elements from mainStack to tempStack and build the displayList
+            self.tempStack.push(self.mainStack.pop().getValue())
 
-        # Then, pop elements from stack2 and push onto stack1 while building the display_list
-        while not self.stack2.isEmpty():
-            value = self.stack2.pop().getValue()
-            self.stack1.push(value)
-            display_list.append(str(value))
+        while not self.tempStack.isEmpty():                                 #pop the tempStack so that it will follow the sequence of nodes
+            node = self.tempStack.pop().getValue()
+            displayList.append(str(node))
+            self.mainStack.push(node)
+            
+            
 
-        print("Queue:", " ".join(display_list))
-
+        
+        print("Queue:", " ".join(displayList))
 
 # Example code using the display method
 queue = QueueUsingStack()
@@ -58,6 +56,7 @@ queue.enqueue(2)
 queue.enqueue(3)
 
 queue.display()  # Output: Queue: 1 2 3
+print(queue.front())
 
 queue.dequeue()
 queue.enqueue(4)

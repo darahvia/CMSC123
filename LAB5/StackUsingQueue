@@ -1,8 +1,8 @@
-import ArrayQueue
+import SLLQueue
 class StackUsingQueue:
     def __init__(self):
-        self.mainQueue = ArrayQueue.ArrayQueue()
-        self.tempQueue = ArrayQueue.ArrayQueue()
+        self.mainQueue = SLLQueue.SLLQueue()
+        self.tempQueue = SLLQueue.SLLQueue()
 
     def push(self, value):
         self.mainQueue.enqueue(value)                                       # To push an element onto the stack, enqueue it into the mainQueue
@@ -10,15 +10,16 @@ class StackUsingQueue:
     def pop(self):
         if self.mainQueue.isEmpty():
             raise Exception("Empty Stack")
-        
-        while self.mainQueue.getSize() > 1:
-            self.tempQueue.enqueue(self.mainQueue.dequeue().getValue())     # Move all elements from mainQueue to tempQueue, except the last one
+          
+        else:
+            while self.mainQueue.getSize() > 1:
+                self.tempQueue.enqueue(self.mainQueue.dequeue().getValue())     # Move all elements from mainQueue to tempQueue, except the last one
 
-        poppedElement = self.mainQueue.dequeue().getValue()                 # The last element in mainQueue is the one to pop
-        self.mainQueue, self.tempQueue = self.tempQueue, self.mainQueue     # Swap the mainQueue and tempQueue references
+            poppedNode = self.mainQueue.dequeue().getValue()                    # The last element in mainQueue is the one to pop
+            self.mainQueue, self.tempQueue = self.tempQueue, self.mainQueue     # Swap the mainQueue and tempQueue references
 
-        return poppedElement
-
+            return poppedNode
+ 
     def top(self):
         if self.mainQueue.isEmpty():
             raise Exception("Empty Stack")
@@ -26,10 +27,10 @@ class StackUsingQueue:
         while self.mainQueue.getSize() > 1:
             self.tempQueue.enqueue(self.mainQueue.dequeue().getValue())     # Move all elements from mainQueue to tempQueue, except the last one
 
-        topElement = self.mainQueue.front().getValue()                      # The last element in mainQueue is the top element
+        topNode = self.mainQueue.front().getValue()                         # The last element in mainQueue is the top element
         self.mainQueue, self.tempQueue = self.tempQueue, self.mainQueue     # Swap the mainQueue and tempQueue references
 
-        return topElement
+        return topNode
 
     def display(self):
         displayList = []
@@ -39,18 +40,17 @@ class StackUsingQueue:
             displayList.append(str(value))
             self.tempQueue.enqueue(value)
 
-        for value in displayList:
-            self.mainQueue.enqueue(value)
-
         self.mainQueue, self.tempQueue = self.tempQueue, self.mainQueue     # Swap the mainQueue and tempQueue references
 
         print("Stack:", " ".join(displayList))
 
-# Example usage:
+# Example
+
 stack = StackUsingQueue()
 stack.push(1)
 stack.push(2)
 stack.push(3)
 stack.display()
+print(stack.top())
 stack.pop()
 stack.display()
