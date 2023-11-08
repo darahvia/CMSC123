@@ -80,11 +80,11 @@ def ArrayQueueTest():
 
 # SLL Queue Tester
 def SLLQueueTest():
-	import CircularQueue
+	import SLLQueue
 
 	score = 0
 	TOTAL = 50
-	testSLL = CircularQueue.SLLQueue()
+	testSLL = SLLQueue.SLLQueue()
 	
 	try:
 		if testSLL.isEmpty():
