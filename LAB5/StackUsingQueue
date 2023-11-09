@@ -9,7 +9,7 @@ class StackUsingQueue:
 
     def pop(self):
         if self.mainQueue.isEmpty():
-            return "Stack is empty."
+            return
           
         else:
             while self.mainQueue.getSize() > 1:

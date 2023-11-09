@@ -10,7 +10,7 @@ class QueueUsingStack:
     def dequeue(self):
 
         if self.mainStack.isEmpty():
-            return "Queue is empty."
+            return
 
         else:
             while not self.mainStack.isEmpty():                             
@@ -56,9 +56,9 @@ class QueueUsingStack:
 # Example code using the display method
 queue = QueueUsingStack()
 
-queue.enqueue(1)
-queue.enqueue(2)
-queue.enqueue(3)
+# queue.enqueue(1)
+# queue.enqueue(2)
+# queue.enqueue(3)
 queue.display()
 print(queue.front())
 
