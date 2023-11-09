@@ -9,7 +9,7 @@ class StackUsingQueue:
 
     def pop(self):
         if self.mainQueue.isEmpty():
-            raise Exception("Empty Stack")
+            return "Stack is empty."
           
         else:
             while self.mainQueue.getSize() > 1:
@@ -22,12 +22,13 @@ class StackUsingQueue:
  
     def top(self):
         if self.mainQueue.isEmpty():
-            raise Exception("Empty Stack")
+            return "Stack is empty."
 
         while self.mainQueue.getSize() > 1:
             self.tempQueue.enqueue(self.mainQueue.dequeue().getValue())     # Move all elements from mainQueue to tempQueue, except the last one
 
         topNode = self.mainQueue.front().getValue()                         # The last element in mainQueue is the top element
+        self.tempQueue.enqueue(self.mainQueue.dequeue())                   # enqueue the remaining
         self.mainQueue, self.tempQueue = self.tempQueue, self.mainQueue     # Swap the mainQueue and tempQueue references
 
         return topNode
@@ -35,14 +36,17 @@ class StackUsingQueue:
     def display(self):
         displayList = []
         
-        while not self.mainQueue.isEmpty():                                 # Move all elements from mainQueue to tempQueue and build the displayList
-            value = self.mainQueue.dequeue().getValue()
-            displayList.append(str(value))
-            self.tempQueue.enqueue(value)
+        if self.mainQueue.isEmpty():
+            print("Stack is Empty.")
+        else:
+            while not self.mainQueue.isEmpty():                                 # Move all elements from mainQueue to tempQueue and build the displayList
+                value = self.mainQueue.dequeue().getValue()
+                displayList.append(str(value))
+                self.tempQueue.enqueue(value)
 
-        self.mainQueue, self.tempQueue = self.tempQueue, self.mainQueue     # Swap the mainQueue and tempQueue references
+            self.mainQueue, self.tempQueue = self.tempQueue, self.mainQueue     # Swap the mainQueue and tempQueue references
 
-        print("Stack:", " ".join(displayList))
+            print("Stack:", " ".join(displayList))
 
 # Example
 
@@ -50,7 +54,10 @@ stack = StackUsingQueue()
 stack.push(1)
 stack.push(2)
 stack.push(3)
+stack.push(4)
 stack.display()
 print(stack.top())
 stack.pop()
+stack.display()
+stack.push("imong mama")
 stack.display()

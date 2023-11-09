@@ -55,6 +55,8 @@ def postfixToInfix(expression):
             stack.push(char)        #push every character or number
 
         elif isOperator(char):
+            if stack.getSize() < 2:
+                raise Exception
             operand2 = stack.pop().getValue()
             operand1 = stack.pop().getValue()
             stack.push(f'({operand1} {char} {operand2})')
@@ -67,14 +69,19 @@ while True:
 
     if userChoice == '1' or userChoice == '2':
         expression = input("Enter an expression: ")
+        
+
 
         if userChoice == '1':
             postfix = infixToPostfix(expression)
             print(f'Postfix notation: {postfix}')
 
         elif userChoice == '2':
-            infix = postfixToInfix(expression)
-            print(f'Infix notation: {infix}')
+            try:
+                infix = postfixToInfix(expression)
+                print(f'Infix notation: {infix}')
+            except:
+                print("Invalid postfix expression.")
 
     else:
         print("Invalid choice. Please enter '1' or '2'.")
