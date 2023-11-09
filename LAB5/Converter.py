@@ -23,6 +23,8 @@ def infixToPostfix(expression):
         if char.isalnum():
             postfix.push(char)
 
+        
+
         elif isOperator(char):
             while not stack.isEmpty() and isOperator(stack.top().getValue()) and (precedence(stack.top().getValue()) >= precedence(char)):      #pop operators from the operator stack and push them to the postfix stack if their precedence is higher or equal
                 postfix.push(stack.pop().getValue())
