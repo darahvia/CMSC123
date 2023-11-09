@@ -57,7 +57,7 @@ def postfixToInfix(expression):
         elif isOperator(char):
             operand2 = stack.pop().getValue()
             operand1 = stack.pop().getValue()
-            stack.push(f'({operand1} {char} {operand2})')
+            stack.push(f'({operand1} {char} {operand2}')
 
     return stack.top().getValue() if stack else ""
 
