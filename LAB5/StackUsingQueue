@@ -37,7 +37,7 @@ class StackUsingQueue:
         displayList = []
         
         if self.mainQueue.isEmpty():
-            print("Stack is Empty.")
+            print("Stack is empty.")
         else:
             while not self.mainQueue.isEmpty():                                 # Move all elements from mainQueue to tempQueue and build the displayList
                 value = self.mainQueue.dequeue().getValue()
@@ -51,10 +51,7 @@ class StackUsingQueue:
 # Example
 
 stack = StackUsingQueue()
-stack.push(1)
-stack.push(2)
-stack.push(3)
-stack.push(4)
+
 stack.display()
 print(stack.top())
 stack.pop()
